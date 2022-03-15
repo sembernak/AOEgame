@@ -31,38 +31,6 @@
     background.width = app.screen.width;
     background.height = app.screen.height;
     app.stage.addChild(background);
-    const container = new PIXI.Container();
-    var grid = 25;
-    let selected = []
-    let selectedColor = 0.0;
-    let hoverColor = 0.2;
-    let mapColor = 1;
-    app.stage.addChild(container);
-    // Create a grid of rectangles
-    for (let i = 0; i < (500 / grid); i++) {
-      for (var j = 0; j < (770 / grid); j++) {
-        const graphics = new PIXI.Graphics();
-        graphics.beginFill(0xFFFFFF);
-        graphics.drawRect(5 + (grid * j), 5 + (grid * i), 25, 25);
-        graphics.interactive = true;
-        graphics.buttonMode = true;
-        graphics.alpha = mapColor;
-        graphics.id = 1 + (i * j)
-        graphics.on('mousedown', selectFixture)
-        graphics.on('mouseover', multipleSelection)
-        graphics.on('mouseout', hover)
-        container.addChild(graphics);
-        let text = new PIXI.Text("", {
-          fontFamily: 'Arial',
-          fontSize: 8,
-          fill: 0x000000,
-          align: 'center'
-        });
-        text.position.x = 10 + (grid * j)
-        text.position.y = 10 + (grid * i)
-        container.addChild(text);
-      }
-    }
 
     function selectFixture() {
       console.log(this)

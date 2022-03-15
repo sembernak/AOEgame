@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Map prototype</title>
+</head>
+<body id='pixiCanvas'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script type="text/javascript">
+      //---------------------------
+      //lets each cell of the grid have its own properties
+      let Cell = class {
+          //javascript is not real
+          //like theres no way
+          //im appalled
+      }
+      //---------------------------
+      
+      function pleaseWork(): Element => {
+          
+      }
+    const app = new PIXI.Application({
+      width: 780,
+      height: 505,
+      resolution: window.devicePixelRatio || 1,
+    });
+    document.body.appendChild(app.view);
+      const background = PIXI.Sprite.from('./BigMap.svg')
+    background.width = app.screen.width;
+    background.height = app.screen.height;
+    app.stage.addChild(background);
+    const container = new PIXI.Container();
+    var grid = 25;
+    let selected = []
+    let selectedColor = 0.0;
+    let hoverColor = 0.2;
+    let mapColor = 1;
+    app.stage.addChild(container);
+    // Create a grid of rectangles
+    for (let i = 0; i < (500 / grid); i++) {
+      for (var j = 0; j < (770 / grid); j++) {
+        const graphics = new PIXI.Graphics();
+        graphics.beginFill(0xFFFFFF);
+        graphics.drawRect(5 + (grid * j), 5 + (grid * i), 25, 25);
+        graphics.interactive = true;
+        graphics.buttonMode = true;
+        graphics.alpha = mapColor;
+        graphics.id = 1 + (i * j)
+        graphics.on('mousedown', selectFixture)
+        graphics.on('mouseover', multipleSelection)
+        graphics.on('mouseout', hover)
+        container.addChild(graphics);
+        let text = new PIXI.Text("", {
+          fontFamily: 'Arial',
+          fontSize: 8,
+          fill: 0x000000,
+          align: 'center'
+        });
+        text.position.x = 10 + (grid * j)
+        text.position.y = 10 + (grid * i)
+        container.addChild(text);
+      }
+    }
+
+    function selectFixture() {
+      console.log(this)
+      if (this.alpha !== selectedColor) {
+        this.isSelected = true;
+        this.alpha = selectedColor
+      } else {
+        this.isSelected = false;
+        this.alpha = mapColor
+      }
+    }
+
+    function multipleSelection() {
+      if (this.alpha === mapColor) {
+        this.alpha = hoverColor;
+      };
+      if (event.shiftKey) {
+        this.isSelected = true;
+        this.alpha = selectedColor;
+        selected.push(this)
+      }
+      if (event.ctrlKey && this.alpha === selectedColor) {
+        this.isSelected = false;
+        this.alpha = mapColor;
+      }
+    }
+
+    function hover() {
+      if (this.alpha !== selectedColor) {
+        this.alpha = mapColor;
+      }
+    }
+  </script>
+</body>
+
+</html>

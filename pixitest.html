@@ -9,61 +9,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
   <script src="https://d3js.org/d3.v4.js"></script>
   <script type="text/javascript">
-      //---------------------------
-      //lets each cell of the grid have its own properties
-      let Cell = class {
-          //javascript is not real
-          //like theres no way
-          //im appalled
-      }
-      //---------------------------
-      
-      function pleaseWork(): Element => {
-          
-      }
     const app = new PIXI.Application({
-      width: 780,
+      width: 1000,
       height: 505,
       resolution: window.devicePixelRatio || 1,
+        backgroundColor: 0xFFFFFF
     });
-    document.body.appendChild(app.view);
-      const background = PIXI.Sprite.from('./BigMap.svg')
-    background.width = app.screen.width;
-    background.height = app.screen.height;
-    app.stage.addChild(background);
+        document.body.appendChild(app.view);
 
-    function selectFixture() {
-      console.log(this)
-      if (this.alpha !== selectedColor) {
-        this.isSelected = true;
-        this.alpha = selectedColor
-      } else {
-        this.isSelected = false;
-        this.alpha = mapColor
-      }
-    }
-
-    function multipleSelection() {
-      if (this.alpha === mapColor) {
-        this.alpha = hoverColor;
-      };
-      if (event.shiftKey) {
-        this.isSelected = true;
-        this.alpha = selectedColor;
-        selected.push(this)
-      }
-      if (event.ctrlKey && this.alpha === selectedColor) {
-        this.isSelected = false;
-        this.alpha = mapColor;
-      }
-    }
-
-    function hover() {
-      if (this.alpha !== selectedColor) {
-        this.alpha = mapColor;
-      }
-    }
-  </script>
+        const background = PIXI.Sprite.from('./bigMap.svg');
+        background.width = 2000;
+        background.height = 1000;
+        app.stage.addChild(background);
+      
+      const ship = PIXI.Sprite.from('./ship.png');
+      ship.anchor.set(0.5);
+      ship.x = app.screen.width / 2;
+      ship.y = app.screen.height / 2;
+      app.stage.addChild(ship);
+</script>
 </body>
 
 </html>
